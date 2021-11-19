@@ -1,0 +1,6 @@
+name: HypixelEnchant
+version: '${project.version}'
+main: io.github.blocksnmore.hypixelench.Hypixelench
+api-version: 1.17
+authors: [ Blocks_n_more ]
+description: A remake of the hypixel enchantment gui

@@ -1,0 +1,13 @@
+###
+# Hypixel Enchant
+#
+# Created by Blocks_n_more
+###
+
+enchgui:
+  # Disable using /enchant
+  disablecmd: false
+  # Disable right-clicking on enchant table to open the gui
+  disabletable: false
+  # Set to a list of enchant ids (names)
+  disableenchants: []
