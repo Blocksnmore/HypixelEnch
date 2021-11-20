@@ -15,6 +15,7 @@ public class EnchantTableClick implements Listener {
         if (clickedBlock == null) return;
         if (clickedBlock.getType().equals(Material.ENCHANTING_TABLE)){
             if (!Hypixelench.config.getBoolean("enchgui.disabletable")) {
+                e.setCancelled(true);
                 EnchantGui.openGui(e.getPlayer(), null);
             }
         }

@@ -3,6 +3,7 @@ package io.github.blocksnmore.hypixelench;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
 import io.github.blocksnmore.hypixelench.commands.Enchant;
+import io.github.blocksnmore.hypixelench.events.EnchantGuiClick;
 import io.github.blocksnmore.hypixelench.events.EnchantTableClick;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
@@ -27,7 +28,8 @@ public final class Hypixelench extends JavaPlugin {
 
     private void registerEvents() {
         for (Listener listener : new Listener[]{
-                new EnchantTableClick()
+                new EnchantTableClick(),
+                new EnchantGuiClick()
         }) {
             getServer().getPluginManager().registerEvents(listener, this);
         }

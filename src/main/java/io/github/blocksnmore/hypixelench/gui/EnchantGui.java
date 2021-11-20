@@ -1,5 +1,6 @@
 package io.github.blocksnmore.hypixelench.gui;
 
+import io.github.blocksnmore.hypixelench.Hypixelench;
 import io.github.blocksnmore.hypixelench.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EnchantGui {
     // Yes, I could automatically generate this list. Will I? No.
@@ -33,8 +35,18 @@ public class EnchantGui {
         }
 
         for (int slot : EnchantGui.bookSlots) {
-            playerInventory.setItem(slot, null);
+            ItemStack fillerItem = new ItemStack(Material.STRUCTURE_VOID);
+            ItemMeta fillerItemMeta = fillerItem.getItemMeta();
+            if (playerItem == null) {
+                fillerItemMeta.displayName(Color.applyColor("&cInsert an item to view enchants"));
+            } else {
+                fillerItemMeta.displayName(Color.applyColor("&f"));
+            }
+            fillerItem.setItemMeta(fillerItemMeta);
+            playerInventory.setItem(slot, fillerItem);
         }
+
+        p.sendMessage(String.valueOf(enchantments.size()));
 
         for (int slot = 0; slot < Math.min(enchantments.size(), EnchantGui.bookSlots.length); slot++) {
             Enchantment enchantment = enchantments.get(slot);
@@ -82,10 +94,13 @@ public class EnchantGui {
         p.openInventory(playerInventory);
     }
 
+    // For some reason this returns 0 even when it shouldn't
     public static ArrayList<Enchantment> enchantsForItem(ItemStack item) {
         ArrayList<Enchantment> workingEnchants = new ArrayList<>();
+        List<String> disabledEnchants = Hypixelench.config.getStringList("enchgui.disableenchants");
 
         for (Enchantment enchantment : EnchantGui.getAllEnchants()) {
+            if (disabledEnchants.contains(enchantment.getKey().toString().substring("minecraft:".length())))
             if (enchantment.canEnchantItem(item)) {
                 workingEnchants.add(enchantment);
             }

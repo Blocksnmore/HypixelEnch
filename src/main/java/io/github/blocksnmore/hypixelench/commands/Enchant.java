@@ -10,6 +10,6 @@ import org.bukkit.entity.Player;
 public class Enchant extends BaseCommand {
     @Default
     public void onDefault(Player p) {
-        EnchantGui.openGui(p, p.getInventory().getItemInMainHand());
+        EnchantGui.openGui(p, null);
     }
 }
