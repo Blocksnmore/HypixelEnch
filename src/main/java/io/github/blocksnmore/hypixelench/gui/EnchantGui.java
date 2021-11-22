@@ -21,8 +21,12 @@ public class EnchantGui {
       39, 40, 41, 42, 43
     };
 
-    public static void openGui(Player p, ItemStack playerItem){
-        Inventory playerInventory = Bukkit.createInventory(p, 9 * 6, Color.applyColor("&2Enchant"));
+    public static void openGui(Player p, ItemStack playerItem) {
+        EnchantGui.openGui(p, playerItem, Bukkit.createInventory(p, 9 * 6, Color.applyColor("&2Enchant")));
+    }
+
+    public static void openGui(Player p, ItemStack playerItem, Inventory playerInventory){
+        if (playerInventory == null) return;
         ItemStack filler = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
         ItemMeta fillerMeta = filler.getItemMeta();
         ArrayList<Enchantment> enchantments = EnchantGui.enchantsForItem(playerItem);

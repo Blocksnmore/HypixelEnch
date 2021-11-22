@@ -21,7 +21,7 @@ public class EnchantGuiClick implements Listener {
             if (e.getRawSlot() < e.getInventory().getSize()) {
                 if (clickedItem == null) {
                     if (e.getCursor() != null){
-                        EnchantGui.openGui((Player) p, e.getCursor());
+                        EnchantGui.openGui((Player) p, e.getCursor(), e.getView().getTopInventory());
                     }
                     return;
                 }
