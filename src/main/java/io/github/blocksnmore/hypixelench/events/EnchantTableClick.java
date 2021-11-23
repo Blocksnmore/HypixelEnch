@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class EnchantTableClick implements Listener {
@@ -14,9 +15,11 @@ public class EnchantTableClick implements Listener {
         Block clickedBlock = e.getClickedBlock();
         if (clickedBlock == null) return;
         if (clickedBlock.getType().equals(Material.ENCHANTING_TABLE)){
-            if (!Hypixelench.config.getBoolean("enchgui.disabletable")) {
-                e.setCancelled(true);
-                EnchantGui.openGui(e.getPlayer(), null);
+            if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (!Hypixelench.config.getBoolean("enchgui.disabletable")) {
+                    e.setCancelled(true);
+                    EnchantGui.openGui(e.getPlayer(), null);
+                }
             }
         }
     }

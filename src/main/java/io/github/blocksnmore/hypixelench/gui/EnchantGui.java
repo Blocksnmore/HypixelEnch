@@ -2,9 +2,11 @@ package io.github.blocksnmore.hypixelench.gui;
 
 import io.github.blocksnmore.hypixelench.Hypixelench;
 import io.github.blocksnmore.hypixelench.utils.Color;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +31,7 @@ public class EnchantGui {
         if (playerInventory == null) return;
         ItemStack filler = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
         ItemMeta fillerMeta = filler.getItemMeta();
-        ArrayList<Enchantment> enchantments = EnchantGui.enchantsForItem(playerItem);
+        ArrayList<Enchantment> enchantments = EnchantGui.enchantsForItem(playerItem == null ? new ItemStack(Material.AIR) : playerItem);
 
         fillerMeta.displayName(Color.applyColor("&r"));
         filler.setItemMeta(fillerMeta);
@@ -49,8 +51,6 @@ public class EnchantGui {
             fillerItem.setItemMeta(fillerItemMeta);
             playerInventory.setItem(slot, fillerItem);
         }
-
-        p.sendMessage(String.valueOf(enchantments.size()));
 
         for (int slot = 0; slot < Math.min(enchantments.size(), EnchantGui.bookSlots.length); slot++) {
             Enchantment enchantment = enchantments.get(slot);
@@ -98,13 +98,12 @@ public class EnchantGui {
         p.openInventory(playerInventory);
     }
 
-    // For some reason this returns 0 even when it shouldn't
     public static ArrayList<Enchantment> enchantsForItem(ItemStack item) {
         ArrayList<Enchantment> workingEnchants = new ArrayList<>();
         List<String> disabledEnchants = Hypixelench.config.getStringList("enchgui.disableenchants");
 
         for (Enchantment enchantment : EnchantGui.getAllEnchants()) {
-            if (disabledEnchants.contains(enchantment.getKey().toString().substring("minecraft:".length())))
+            if (disabledEnchants.contains(enchantment.getKey().toString().substring("minecraft:".length()))) continue;
             if (enchantment.canEnchantItem(item)) {
                 workingEnchants.add(enchantment);
             }

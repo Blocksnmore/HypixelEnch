@@ -10,7 +10,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-
 public class EnchantGuiClick implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
@@ -20,14 +19,14 @@ public class EnchantGuiClick implements Listener {
         if (view.title().equals(Color.applyColor("&2Enchant"))) {
             if (e.getRawSlot() < e.getInventory().getSize()) {
                 if (clickedItem == null) {
-                    if (e.getCursor() != null){
-                        EnchantGui.openGui((Player) p, e.getCursor(), e.getView().getTopInventory());
-                    }
+                    EnchantGui.openGui((Player) p, e.getCursor(), e.getView().getTopInventory());
                     return;
                 }
-                p.sendMessage(clickedItem.displayName());
                 if (e.getSlot() != 28) {
                     e.setCancelled(true);
+                }
+                if (e.getSlot() == 49) {
+                    e.getView().close();
                 }
             }
         }
